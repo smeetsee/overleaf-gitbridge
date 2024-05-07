@@ -11,6 +11,7 @@ module.exports =
 	const cookieJar = client.defaults.jar;
 	const cookie = cookieJar.getCookieStringSync( olServer );
 	const res = await client.get( olServer + '/socket.io/1/?projectId=' + project_id + '&t=' + Date.now() );
+	console.log(res);
 	const regexSocketToken = /([^:]*):60:60:websocket,flashsocket,htmlfile,xhr-polling,jsonp-polling/;
 	const socketToken = res.data.match( regexSocketToken )[ 1 ];
 	const socket = io.connect(
@@ -33,10 +34,15 @@ module.exports =
 	while( !project )
 	{
 		const promise = new Promise( ( resolve, reject ) => {
-			socket.emit(
-				'joinProject',
-				{ 'project_id': project_id },
-				( self, res, owner, number ) => resolve( res )
+			// socket.emit(
+			// 	'joinProject',
+			// 	{ 'project_id': project_id },
+			// 	( self, res, owner, number ) => resolve( res )
+			// );
+			socket.on("connect",
+				() => {
+					console.log("connected")
+				}
 			);
 			setTimeout( ( ) => resolve( undefined ), 1000 );
 		} );
