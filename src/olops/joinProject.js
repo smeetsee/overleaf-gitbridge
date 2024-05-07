@@ -43,7 +43,9 @@ module.exports =
 			// 	() => {
 			// 		console.log("connected")
 			// 	}
+			console.log('dummy');
 			socket.on('message', (data) => {
+				console.log('dummy2');
 					console.log(data);
 				}
 			);
