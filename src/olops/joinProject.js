@@ -10,8 +10,11 @@ module.exports =
 	console.log( client.count, 'io connect to', project_id );
 	const cookieJar = client.defaults.jar;
 	const cookie = cookieJar.getCookieStringSync( olServer );
+	const res = await client.get( olServer + '/socket.io/1/?projectId=' + project_id + '&t=' + Date.now() );
+	const regexSocketToken = /([^:]*):60:60:websocket,flashsocket,htmlfile,xhr-polling,jsonp-polling/;
+	const socketToken = res.data.match( regexSocketToken )[ 1 ];
 	const socket = io.connect(
-			olServer,
+			olServer + '/socket.io/1/websocket/' + socketToken + '?projectId=' + project_id,
 			{
 				withCredentials: true,
 				cookie: cookie,
@@ -20,6 +23,8 @@ module.exports =
 			}
 		);
 	let project;
+
+	console.log(socket);
 
 	// this is a bad workaround, sometimes socket.io just doesn't seem to reply
 	// (or reply to a previous connection, there are some fixes in newer versions it seems)
@@ -36,6 +41,7 @@ module.exports =
 			setTimeout( ( ) => resolve( undefined ), 1000 );
 		} );
 		project = await promise;
+		console.log(project);
 		if( !project ) console.log( client.count, '*** timeout on socket.io, retrying' );
 	}
 	console.log( client.count, 'iosocket disconnect' );
