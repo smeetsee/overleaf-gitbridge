@@ -39,7 +39,7 @@ module.exports =
 			// 	{ 'project_id': project_id },
 			// 	( self, res, owner, number ) => resolve( res )
 			// );
-			socket.on("connect",
+			socket.on("data",
 				() => {
 					console.log("connected")
 				}
