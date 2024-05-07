@@ -64,7 +64,11 @@ module.exports =
 		// } );
 		const promise = new Promise((resolve, reject) => {
 			socket.on('joinProjectResponse', (response) => {
-				resolve(response);
+				if (response.error) {
+					reject(response.error);
+				} else {
+					resolve(response);
+				}
 			});
 
 			socket.emit(
