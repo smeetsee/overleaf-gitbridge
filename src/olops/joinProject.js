@@ -44,7 +44,7 @@ module.exports =
 			// 		console.log("connected")
 			// 	}
 			console.log('dummy');
-			socket.onAny(event_name, (data) => {
+			socket.onAny((data) => {
 					console.log('dummy2');
 					console.log(event_name);
 					console.log(data);
