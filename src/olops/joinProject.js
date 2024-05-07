@@ -47,6 +47,7 @@ module.exports =
 			setTimeout( ( ) => resolve( undefined ), 1000 );
 		} );
 		project = await promise;
+		console.log(socket);
 		console.log(project);
 		if( !project ) console.log( client.count, '*** timeout on socket.io, retrying' );
 	}
