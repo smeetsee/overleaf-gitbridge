@@ -31,9 +31,12 @@ module.exports =
 			// Handle the received data here
 		});
 	});
+
+	console.log(socket.io.engine.transport.ws.buffer);
+
 	let project;
 
-	console.log(socket);
+	// console.log(socket);
 
 	// this is a bad workaround, sometimes socket.io just doesn't seem to reply
 	// (or reply to a previous connection, there are some fixes in newer versions it seems)
@@ -71,7 +74,7 @@ module.exports =
 			}, 10000); // Adjust timeout duration as needed
 		});
 		project = await promise;
-		console.log(socket);
+		// console.log(socket);
 		console.log(project);
 		if( !project ) console.log( client.count, '*** timeout on socket.io, retrying' );
 	}
