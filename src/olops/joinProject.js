@@ -11,7 +11,7 @@ module.exports =
 	const cookieJar = client.defaults.jar;
 	const cookie = cookieJar.getCookieStringSync( olServer );
 	const res = await client.get( olServer + '/socket.io/1/?projectId=' + project_id + '&t=' + Date.now() );
-	console.log(res);
+	// console.log(res);
 	const regexSocketToken = /([^:]*):60:60:websocket,flashsocket,htmlfile,xhr-polling,jsonp-polling/;
 	const socketToken = res.data.match( regexSocketToken )[ 1 ];
 	const socket = io.connect(
@@ -31,8 +31,6 @@ module.exports =
 			// Handle the received data here
 		});
 	});
-
-	console.log(socket.io.engine.transport.ws.buffer);
 
 	let project;
 
@@ -75,7 +73,7 @@ module.exports =
 		});
 		project = await promise;
 		// console.log(socket);
-		console.log(project);
+		console.log("This is the project: " + project);
 		if( !project ) console.log( client.count, '*** timeout on socket.io, retrying' );
 	}
 	console.log( client.count, 'iosocket disconnect' );
