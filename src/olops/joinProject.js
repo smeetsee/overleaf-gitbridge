@@ -39,9 +39,12 @@ module.exports =
 			// 	{ 'project_id': project_id },
 			// 	( self, res, owner, number ) => resolve( res )
 			// );
-			socket.on("data",
-				() => {
-					console.log("connected")
+			// socket.on("data",
+			// 	() => {
+			// 		console.log("connected")
+			// 	}
+			socket.on('message', (data) => {
+					console.log(data);
 				}
 			);
 			setTimeout( ( ) => resolve( undefined ), 1000 );
