@@ -33,26 +33,35 @@ module.exports =
 	// should it occour.
 	while( !project )
 	{
-		const promise = new Promise( ( resolve, reject ) => {
-			// socket.emit(
-			// 	'joinProject',
-			// 	{ 'project_id': project_id },
-			// 	( self, res, owner, number ) => resolve( res )
-			// );
-			// socket.on("data",
-			// 	() => {
-			// 		console.log("connected")
-			// 	}
-			socket.on('message', function (m) { console.log(m); });
-			console.log('dummy');
-			// socket.onAny((event_name, data) => { // Added missing parentheses
-			// 		console.log('dummy2');
-			// 		console.log(event_name);
-			// 		console.log(data);
-			// 	}
-			// );
-			setTimeout( ( ) => resolve( undefined ), 1000 );
-		} );
+		// const promise = new Promise( ( resolve, reject ) => {
+		// 	// socket.emit(
+		// 	// 	'joinProject',
+		// 	// 	{ 'project_id': project_id },
+		// 	// 	( self, res, owner, number ) => resolve( res )
+		// 	// );
+		// 	// socket.on("data",
+		// 	// 	() => {
+		// 	// 		console.log("connected")
+		// 	// 	}
+		// 	socket.on('message', function (m) { console.log(m); });
+		// 	console.log('dummy');
+		// 	// socket.onAny((event_name, data) => { // Added missing parentheses
+		// 	// 		console.log('dummy2');
+		// 	// 		console.log(event_name);
+		// 	// 		console.log(data);
+		// 	// 	}
+		// 	// );
+		// 	setTimeout( ( ) => resolve( undefined ), 1000 );
+		// } );
+		const promise = new Promise((resolve, reject) => {
+			socket.on('joinProjectResponse', (response) => {
+				resolve(response);
+			});
+	
+			setTimeout(() => {
+				reject('Timeout occurred');
+			}, 10000); // Adjust timeout duration as needed
+		});
 		project = await promise;
 		console.log(socket);
 		console.log(project);
