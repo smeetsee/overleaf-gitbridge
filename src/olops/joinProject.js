@@ -63,9 +63,9 @@ module.exports =
 		// 	setTimeout( ( ) => resolve( undefined ), 1000 );
 		// } );
 		const promise = new Promise((resolve, reject) => {
-			// socket.on('joinProjectResponse', (response) => {
-			// 	resolve(response);
-			// });
+			socket.on('joinProjectResponse', (response) => {
+				resolve(response);
+			});
 
 			socket.emit(
 				'joinProject',
