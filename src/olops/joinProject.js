@@ -69,8 +69,8 @@ module.exports =
 
 			socket.emit(
 				'joinProject',
-				{ 'project_id': project_id },
-				( self, res, owner, number ) => resolve( res )
+				{ 'project_id': project_id }//,
+				//( self, res, owner, number ) => resolve( res )
 			);
 	
 			setTimeout(() => {
