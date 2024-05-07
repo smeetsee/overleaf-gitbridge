@@ -66,6 +66,12 @@ module.exports =
 			socket.on('joinProjectResponse', (response) => {
 				resolve(response);
 			});
+
+			socket.emit(
+				'joinProject',
+				{ 'project_id': project_id },
+				( self, res, owner, number ) => resolve( res )
+			);
 	
 			setTimeout(() => {
 				reject('Timeout occurred');
