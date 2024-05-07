@@ -23,6 +23,14 @@ module.exports =
 				'force new connection': true,
 			}
 		);
+	socket.on('connect', () => {
+		console.log('Connected to server');
+		// Now that the connection is established, set up message listeners
+		socket.on('joinProjectResponse', (data) => {
+			console.log('Received joinProjectResponse:', data);
+			// Handle the received data here
+		});
+	});
 	let project;
 
 	console.log(socket);
