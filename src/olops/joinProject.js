@@ -70,7 +70,13 @@ module.exports =
 			socket.emit(
 				'joinProject',
 				{ 'project_id': project_id },
-				(res) => resolve( res )
+				(res) => {
+					if (res.error) {
+						reject(res.error);
+					} else {
+						resolve( res );
+					}
+				}
 			);
 	
 			// setTimeout(() => {
