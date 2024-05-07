@@ -44,8 +44,9 @@ module.exports =
 			// 		console.log("connected")
 			// 	}
 			console.log('dummy');
-			socket.on('joinProjectResponse', (data) => {
-				console.log('dummy2');
+			socket.onAny(event_name, (data) => {
+					console.log('dummy2');
+					console.log(event_name);
 					console.log(data);
 				}
 			);
