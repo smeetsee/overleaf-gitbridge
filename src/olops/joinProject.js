@@ -43,14 +43,14 @@ module.exports =
 			// 	() => {
 			// 		console.log("connected")
 			// 	}
-			// socket.on('message', function (m) { console.log(m); });
+			socket.on('message', function (m) { console.log(m); });
 			console.log('dummy');
-			socket.onAny((event_name, data) => { // Added missing parentheses
-					console.log('dummy2');
-					console.log(event_name);
-					console.log(data);
-				}
-			);
+			// socket.onAny((event_name, data) => { // Added missing parentheses
+			// 		console.log('dummy2');
+			// 		console.log(event_name);
+			// 		console.log(data);
+			// 	}
+			// );
 			setTimeout( ( ) => resolve( undefined ), 1000 );
 		} );
 		project = await promise;
