@@ -96,7 +96,7 @@ module.exports =
 		});
 		project = await promise;
 		// console.log(socket);
-		console.log("This is the project: " + project);
+		console.log("This is the project: " + JSON.stringify(project));
 		if( !project ) console.log( client.count, '*** timeout on socket.io, retrying' );
 	}
 	console.log( client.count, 'iosocket disconnect' );
