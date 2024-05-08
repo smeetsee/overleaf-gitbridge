@@ -70,7 +70,7 @@ module.exports =
 				if (response.error) {
 					reject(response.error);
 				} else {
-					resolve(response);
+					resolve(response.project);
 				}
 			});
 
@@ -82,7 +82,7 @@ module.exports =
 					if (res.error) {
 						reject(res.error);
 					} else {
-						resolve( res );
+						resolve( res.project );
 					}
 				}
 			);
