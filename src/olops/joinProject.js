@@ -85,10 +85,13 @@ module.exports =
 					}
 				}
 			);
-	
+
+			
 			// setTimeout(() => {
 			// 	reject('Timeout occurred');
 			// }, 10000); // Adjust timeout duration as needed
+			
+			console.log('Reached end of promise.')
 		});
 		project = await promise;
 		// console.log(socket);
