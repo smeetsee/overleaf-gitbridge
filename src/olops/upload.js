@@ -7,6 +7,7 @@ module.exports =
 	async function( client, olServer, project_id, folder_id, filename, data )
 {
 	const formData = new FormData();
+	formData.append('name', filename)
 	formData.append( 'qqfile', data, filename );
 	try
 	{
