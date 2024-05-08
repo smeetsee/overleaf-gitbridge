@@ -23,6 +23,7 @@ module.exports =
 				'force new connection': true,
 			}
 		);
+	console.log(socket);
 	// socket.on('joinProjectResponse', (data) => {
 	// 	console.log('Received joinProjectResponse:', data);
 	// 	// Handle the received data here
@@ -64,6 +65,7 @@ module.exports =
 		// } );
 		const promise = new Promise((resolve, reject) => {
 			socket.on('joinProjectResponse', (response) => {
+				console.log(response);
 				if (response.error) {
 					reject(response.error);
 				} else {
@@ -75,6 +77,7 @@ module.exports =
 				'joinProject',
 				{ 'project_id': project_id },
 				(res) => {
+					console.log(res);
 					if (res.error) {
 						reject(res.error);
 					} else {
