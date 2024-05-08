@@ -15,8 +15,8 @@ module.exports =
 	const regexSocketToken = /([^:]*):60:60:websocket,flashsocket,htmlfile,xhr-polling,jsonp-polling/;
 	const socketToken = res.data.match( regexSocketToken )[ 1 ];
 	const socket = io.connect(
-			olServer //+ '/socket.io/1/websocket/' + socketToken + '?projectId=' + project_id,
-			,
+			olServer //+ '/socket.io/1/websocket/' + socketToken
+			+ '?projectId=' + project_id,
 			{
 				withCredentials: true,
 				cookie: cookie,
