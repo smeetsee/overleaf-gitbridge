@@ -33,7 +33,7 @@ let counter = 0;
 | Handles the git request.
 */
 const beginRemoteGitRequest =
-	async function( err, service, client, project_id, res, auth, pfla, forced_push )
+	async function( err, service, client, project_id, res, auth, pflag, forced_push )
 {
 	if( err ) return res.end( err + '\n' );
 	console.log( client.count, 'begin serving remote git request' );
