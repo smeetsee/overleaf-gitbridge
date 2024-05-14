@@ -33,7 +33,7 @@ let counter = 0;
 | Handles the git request.
 */
 const beginRemoteGitRequest =
-	async function( err, service, client, project_id, res, auth, pflag, forced_push )
+	async function( err, service, client, project_id, res, auth, pflag )
 {
 	if( err ) return res.end( err + '\n' );
 	console.log( client.count, 'begin serving remote git request' );
@@ -57,7 +57,7 @@ const beginRemoteGitRequest =
 	// spawns the git request
 	const ps = spawn( service.cmd, args );
 	ps.stdout.pipe( service.createStream( ) ).pipe( ps.stdin );
-	ps.on( 'close', ( ) => endRemoteGitRequest( client, project, cmd, auth, pflag, forced_push ) );
+	ps.on( 'close', ( ) => endRemoteGitRequest( client, project, cmd, auth, pflag ) );
 };
 
 /*
@@ -67,23 +67,10 @@ const beginRemoteGitRequest =
 | while olgitbridge still handles upsyncing the changes to overleaf.
 */
 const endRemoteGitRequest =
-	async function( client, project, cmd, auth, pflag, forced_push )
+	async function( client, project, cmd, auth, pflag )
 {
 	console.log( client.count, 'remote git request ended, pulling into pad' );
-	if(forced_push) {
-		try{ await fs.unlink(project.padDir); }
-		catch( e )
-		{
-			// rethrows anything but entity not found
-			if( e.code !== 'ENOENT' ) throw e;
-
-			// if folder does not exist, we do not care (given that we are simply trying to delete it anyway)
-		}
-
-		await git.clone(project.repoDir, padsDir);
-	} else {
-		await git.fetchAndReset( project.padDir );
-	}
+	await git.fetchAndReset( project.padDir );
 	if( cmd === 'git-receive-pack' )
 	{
 		console.log( client.count, 'upsyncing' );
@@ -242,10 +229,6 @@ const serve =
 
 	const pflag = await prepareProject( count, project_id );
 	const project = projects[ project_id ];
-
-	if (req.headers['git-force-update'] === 'true') {
-		// The Git-Force-Update header is set to true => make sure uploaded repository is stored everywhere
-	} else
 	{
 		const now = Date.now( );
 		const lastSync = project.lastSync;
@@ -273,7 +256,7 @@ const serve =
 
 	req.pipe(
 		backend( url, ( err, service ) =>
-			beginRemoteGitRequest( err, service, client, project_id, res, auth, pflag, req.headers['git-force-update'] === 'true' )
+			beginRemoteGitRequest( err, service, client, project_id, res, auth, pflag )
 		)
 	).pipe( res );
 };
