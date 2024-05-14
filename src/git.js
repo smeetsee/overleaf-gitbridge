@@ -28,12 +28,13 @@ const init =
 };
 
 /*
-| Pulls a repository.
+| Fetches a repository and resets it to its remote state.
 */
-const pull =
+const fetchAndReset =
 	async function( dir )
 {
-	await aspawn( gitBinary, [ 'pull', '--no-edit' ] , { cwd: dir } );
+	await aspawn( gitBinary, [ 'fetch', 'origin' ] , { cwd: dir } );
+	await aspawn( gitBinary, [ 'pull', 'reset', '--hard', 'origin/master' ] , { cwd: dir } );
 };
 
 /*
@@ -65,6 +66,6 @@ module.exports =
 {
 	clone: clone,
 	init: init,
-	pull: pull,
+	fetchAndReset: fetchAndReset,
 	save: save,
 };

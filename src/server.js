@@ -82,7 +82,7 @@ const endRemoteGitRequest =
 
 		await git.clone(project.repoDir, padsDir);
 	} else {
-		await git.pull( project.padDir );
+		await git.fetchAndReset( project.padDir );
 	}
 	if( cmd === 'git-receive-pack' )
 	{
