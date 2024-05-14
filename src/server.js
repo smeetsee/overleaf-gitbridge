@@ -71,7 +71,15 @@ const endRemoteGitRequest =
 {
 	console.log( client.count, 'remote git request ended, pulling into pad' );
 	if(forced_push) {
-		await fs.unlink(project.padDir);
+		try{ await fs.unlink(project.padDir); }
+		catch( e )
+		{
+			// rethrows anything but entity not found
+			if( e.code !== 'ENOENT' ) throw e;
+
+			// if folder does not exist, we do not care (given that we are simply trying to delete it anyway)
+		}
+
 		await git.clone(project.repoDir, padsDir);
 	} else {
 		await git.pull( project.padDir );
