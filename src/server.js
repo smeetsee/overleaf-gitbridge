@@ -33,7 +33,7 @@ let counter = 0;
 | Handles the git request.
 */
 const beginRemoteGitRequest =
-	async function( err, service, client, project_id, res, auth, pflag )
+	async function( err, service, client, project_id, res, auth, pfla, forced_push )
 {
 	if( err ) return res.end( err + '\n' );
 	console.log( client.count, 'begin serving remote git request' );
@@ -57,7 +57,7 @@ const beginRemoteGitRequest =
 	// spawns the git request
 	const ps = spawn( service.cmd, args );
 	ps.stdout.pipe( service.createStream( ) ).pipe( ps.stdin );
-	ps.on( 'close', ( ) => endRemoteGitRequest( client, project, cmd, auth, pflag ) );
+	ps.on( 'close', ( ) => endRemoteGitRequest( client, project, cmd, auth, pflag, forced_push ) );
 };
 
 /*
@@ -67,10 +67,15 @@ const beginRemoteGitRequest =
 | while olgitbridge still handles upsyncing the changes to overleaf.
 */
 const endRemoteGitRequest =
-	async function( client, project, cmd, auth, pflag )
+	async function( client, project, cmd, auth, pflag, forced_push )
 {
 	console.log( client.count, 'remote git request ended, pulling into pad' );
-	await git.pull( project.padDir );
+	if(forced_push) {
+		await fs.unlink(project.padDir);
+		await git.clone(project.repoDir, padsDir);
+	} else {
+		await git.pull( project.padDir );
+	}
 	if( cmd === 'git-receive-pack' )
 	{
 		console.log( client.count, 'upsyncing' );
@@ -229,6 +234,10 @@ const serve =
 
 	const pflag = await prepareProject( count, project_id );
 	const project = projects[ project_id ];
+
+	if (req.headers['git-force-update'] === 'true') {
+		// The Git-Force-Update header is set to true => make sure uploaded repository is stored everywhere
+	} else
 	{
 		const now = Date.now( );
 		const lastSync = project.lastSync;
@@ -256,7 +265,7 @@ const serve =
 
 	req.pipe(
 		backend( url, ( err, service ) =>
-			beginRemoteGitRequest( err, service, client, project_id, res, auth, pflag )
+			beginRemoteGitRequest( err, service, client, project_id, res, auth, pflag, req.headers['git-force-update'] === 'true' )
 		)
 	).pipe( res );
 };
