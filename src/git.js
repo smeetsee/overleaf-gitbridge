@@ -34,7 +34,7 @@ const fetchAndReset =
 	async function( dir )
 {
 	await aspawn( gitBinary, [ 'fetch', 'origin' ] , { cwd: dir } );
-	await aspawn( gitBinary, [ 'pull', 'reset', '--hard', 'origin/master' ] , { cwd: dir } );
+	await aspawn( gitBinary, [ 'reset', '--hard', 'origin/master' ] , { cwd: dir } );
 };
 
 /*
