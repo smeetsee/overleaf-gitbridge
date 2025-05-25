@@ -28,7 +28,7 @@
       , "express": "2.5.x"
       , "jade": "*"
       , "stylus": "*"
-      , "socket.io": "0.9.17"
+      , "socket.io": "2.5.0"
       , "should": "*"
     }
   , "engines": { "node": ">= 0.4.0" }
