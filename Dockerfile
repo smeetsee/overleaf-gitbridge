@@ -1,8 +1,13 @@
 FROM node:lts-slim
 
 WORKDIR /var/olgitbridge/
-RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends git ca-certificates -y && apt-get clean
-RUN git config --global user.email "overleaf@smeets.ee" && git config --global user.name "Overleaf"
+RUN apt-get update && \
+    apt-mark install git ca-certificates && \
+    apt-get dselect-upgrade -y --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN git config --global user.name "Overleaf" && \
+    git config --global user.email "overleaf@smeets.ee"
 COPY . .
 RUN npm install
 

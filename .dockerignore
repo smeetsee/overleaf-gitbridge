@@ -1,0 +1,8 @@
+.gitignore
+.github
+.git
+LICENSE
+README.md
+lib/README.md
+lib/socket.io-client/*.md
+lib/xmlhttprequest/*.md
