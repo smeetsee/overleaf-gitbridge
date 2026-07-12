@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:24.18.0-slim
 
 WORKDIR /var/olgitbridge/
 RUN echo "path-exclude=/usr/share/man/*" > /etc/dpkg/dpkg.cfg.d/01_nodocs && \
