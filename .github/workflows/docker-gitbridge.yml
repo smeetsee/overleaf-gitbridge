@@ -6,8 +6,6 @@ name: Git Bridge
 # documentation.
 
 on:
-  schedule:
-    - cron: '11 3 * * *'
   workflow_dispatch:
   push:
     branches: [ "main" ]
