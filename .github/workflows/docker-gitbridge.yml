@@ -44,7 +44,7 @@ jobs:
           platform=${{ matrix.platform }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
       
       # - name: Change project join timeout
       #   run: sed -i 's/setTimeout( ( ) => resolve( undefined ), 1000 );/setTimeout( ( ) => resolve( undefined ), 10000 );/' src/olops/joinProject.js
