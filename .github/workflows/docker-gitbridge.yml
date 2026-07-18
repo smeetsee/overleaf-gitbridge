@@ -115,7 +115,7 @@ jobs:
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }} -y
 
   merge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: ${{ github.event_name != 'pull_request' }}
     needs:
       - docker
